@@ -1,0 +1,104 @@
+body, html {
+    font-family: '微软雅黑',YaHeiConsolas,'Microsoft YaHei', 'Helvetica', 'Arial', sans-serif;
+    margin: 0px;
+}
+
+.itemText {
+    font-weight: normal;
+    font-size: 22px;
+    padding: 0px 15px 0px 15px;
+}
+
+.hotkey {
+    font-family: Serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+.nav, a.nav:link, a.nav:visited, a.nav:hover, a.nav:active {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: Arial;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.navrest, a.navrest:link, a.navrest:visited, a.navrest:hover, a.navrest:active {
+    color: #CCCCCC;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.navoff {
+    color: #999999;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.navspacer {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.menubar, a.menubar:link, a.menubar:visited, a.menubar:hover, a.menubar:active {
+    padding: 10px 15px 10px 15px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.menubarRead, a.menubarRead:link, a.menubarRead:visited, a.menubarRead:hover, a.menubarRead:active {
+    padding: 10px 15px 10px 15px;
+    color: #777777;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.itembar, a.itembar:link, a.itembar:visited, a.itembar:hover, a.itembar:active {
+    padding: 10px 15px 10px 15px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.itembarRead, a.itembarRead:link, a.itembarRead:visited, a.itembarRead:hover, a.itembarRead:active {
+    padding: 10px 15px 10px 15px;
+    color: #777777;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.teaser, a.teaser:link, a.teaser:visited, a.teaser:hover, a.teaser:active {
+    padding: 0px 15px 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.teaserRead, a.teaserRead:link, a.teaserRead:visited, a.teaserRead:hover, a.teaserRead:active {
+    padding: 0px 15px 10px 15px;
+    color: #777777;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.author {
+    color: #777777;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+h3 {
+    margin: 0;
+}

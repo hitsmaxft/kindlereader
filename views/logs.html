@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body %}
+{{ module_menu.render("logs") }}
+{% if logs and logs.count() %}
+<em class="required">*</em> 只显示最后10条日志<br />
+<table class="logs_list" border="0" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th>时间</th>
+        <th class="center">Feed</th>
+        <th class="center">投递条目</th>
+        <th class="center">页面</th>
+        <th>收件人</th>
+        <th class="center">状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.time }}</td>
+        <td class="center">{{ log.feeds }}</td>
+        <td class="center">{{ log.items }}</td>
+        <td class="center">{% if log.pages %}{{ log.pages }}{% else %}0{% end %}</td>
+        <td>{{ log.to }}</td>
+        <td class="center">{% if log.status %}{{ log.status }}{% else %}ok{% end %}</td>
+    </tr>
+    {% end %}
+    </tbody>
+</table>
+{% else %}
+<p>还没有投递过</p>
+{% end %}
+
+{% end %}

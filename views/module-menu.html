@@ -1,0 +1,55 @@
+<h2 id="categoryHeader"> 
+{% if current is "setting" %}
+{{ l10n.setting }}
+{% else %}
+<a style="font-weight: normal;" href="/setting">{{ l10n.setting }}</a>
+{% end %}
+
+<span style="color: #ccc;">&bull;</span>
+
+{% if current is "logs" %}
+{{ l10n.logs }}
+{% else %}
+<a style="font-weight: normal;" href="/logs">{{ l10n.logs }}</a>
+{% end %}
+
+<span style="color: #ccc;">&bull;</span>
+
+{% if current is "online" %}
+{{ l10n.online }}
+{% else %}
+<a style="font-weight: normal;" href="/reader">{{ l10n.online }}</a>
+{% end %}
+
+{% if current is "cancel_account" %}
+<span style="color: #ccc;">&bull;</span>
+{{ l10n.cancel_account }}
+{% end %}
+
+{% if current is "oauth" %}
+<span style="color: #ccc;">&bull;</span>
+{{ l10n.oauth }}
+{% end %}
+
+{% if current is "setup" %}
+<span style="color: #ccc;">&bull;</span>
+{{ l10n.setup }}
+{% end %}
+
+
+<span style="color: #ccc;">&bull;</span>
+
+{% if current is "qna" %}
+{{ l10n.qna }}
+{% else %}
+<a style="font-weight: normal;" href="/qna">{{ l10n.qna }}</a>
+{% end %}
+
+<span style="color: #ccc;">&bull;</span>
+
+{% if current is "feedback" %}
+{{ l10n.feedback }}
+{% else %}
+<a style="font-weight: normal;" href="/feedback">{{ l10n.feedback }}</a>
+{% end %}
+</h2>

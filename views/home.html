@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% if not nickname %}
+<h2  style="text-align:center;padding:10px 0;"><a href="{{ login_url }}">{{ l10n.login }}</a></h2>
+{% else %}
+{{ module_menu.render(None) }}
+{% end %}
+<p>Kindlereader致力于优化Kindle的Google reader阅读体验，使用Kindlereader你可以使用以下几种方式阅读Google reader： </p>
+<p>
+    1、离线模式，Kindlereader可以定时将Google reader未读条目投递到你的Kindle<br />
+    2、在线阅读，你也可以使用我们为kindle优化阅读体验的在线Google reader阅读模式<br />
+    3、使用我们 <a href="https://bitbucket.org/jiedan/kindlereader" rel="external">开源的Kindlereader程序</a> 你可以在你自己的电脑或服务器上下载包含图片的Google reader到你的Kindle
+</p>
+{% end %}

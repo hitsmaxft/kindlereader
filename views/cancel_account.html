@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{{ module_menu.render("cancel_account") }}
+
+<p>
+    <form action="" id="cancelform" method="post">
+    <label><input type="checkbox" id="confrim" name="confirm" value="1" />确定要删除此账户？</label>
+    <input type="submit" value="提交" />
+    </form>
+</p>
+<p>
+    注意：删除账户后本站将删除此账户及相应日志记录，包括Google reader授权信息，同时请至 <a href="https://www.google.com/accounts/IssuedAuthSubTokens"  rel="external">https://www.google.com/accounts/IssuedAuthSubTokens</a> 撤销 {{ consumer_key }} 访问权。
+    
+</p>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#cancelform").submit(function(){
+        if($("#confrim").attr('checked'))
+        {
+            return true;
+        }
+        else
+        {
+            alert("请选中确定要删除此账户！");
+            return false;
+        }
+    });
+    
+});
+</script>
+{% end %}

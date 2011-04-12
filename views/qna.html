@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+{{ module_menu.render("qna") }}
+<dl class="qna_list">
+    <dt id="q1">1、 问：为什么日志中显示发送成功，我的kindle却没有收到？</dt>
+    <dd>答：首先必须激活您的Kindle，我们不支持非激活版的Kindle，然后请到亚马逊账户中心 <a href="https://www.amazon.com/gp/digital/fiona/manage" rel="external">Manage Your Kindle</a> 页面将 <strong>feeds@dogear.mobi</strong> 加入 &quot;Your Kindle's approved email list&quot;</dd>
+    <dt id="q2">2、 问：为什么我收到Google reader投递的新闻都是只有一段文字，不是全文？</dt>
+    <dd>答：你订阅的rss没有输出全文，你可以使用第三方Feed全文服务处理后再订阅到Google reader</dd>
+    <dt id="q3">3、 问：为什么要续期？</dt>
+    <dd>答：免费续期是为了杜绝滥用形为，因为大部分用户在停用kindle之后并不会记得来本站删除账号，而本站会持续投递</dd>
+</dl>
+{% end %}

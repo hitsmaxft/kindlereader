@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block body %}
+{{ module_menu.render("setting") }}
+<div class="grey">
+    你的投递将于 <strong id="expires">{{ gr.expires.strftime("%Y-%m-%d") }}</strong> 自动停止，请点击 <input type="button" name="checkin" value="免费续期" id="checkin"> <a href="/qna#q3">为什么要续期？</a> <a href="/cancel_account">删除此账户</a>
+</div>
+
+<form id="set_frm" action="" method="post">
+    {% if success %}
+    {% if not gr.kindle_email %}
+    <strong class="error">Kindle E-mail必须填写！</strong>
+    {% elif not gr.categories %}
+    <strong class="success">保存成功，你没有选择任何分类，将不会投递！</strong>
+    {% else %}
+    <strong class="success">恭喜，保存成功！</strong>
+    {% end %}
+    {% end %}
+    
+    <fieldset id="kindle_fieldset">
+        <legend>基本设置</legend>
+        <p>
+            <label>Kindle E-mail("name"@free.kindle.com)<em class="required">*</em></label><br />
+            <input type="text" name="kindle_email" style="width:240px" value="{% if gr and gr.kindle_email %}{{ gr.kindle_email }}{% end %}" />{% if success and not gr.kindle_email %}<em style="color:red;font-size:80%">此项不能为空</em>{% end %}
+        </p>
+        <p>
+            <label>投递时间(北京时间)<em class="required">*</em></label>
+            <select class="bool" name="send_time">
+                {% for i in range(0, 24) %}
+                <option value="{{ i }}" {% if gr.send_time == i %}selected="selected"{% end %}>{{ "%02.0f:00" % i }}</option>
+                {% end %}
+            </select>
+        </p>
+        
+        <p>
+            <a id="testlink" href="/deliver?test=1">现在投递</a><strong id="testmsg" class="error"></strong> 注意：投递需一段时间，更新内容越多所需时间越长
+        </p>
+        
+    </fieldset>
+    
+    <fieldset id="gr_fieldset">
+        <legend>Google reader投递设置</legend>
+        
+        {% if gr and gr_account %}
+        
+        <div class="grey"> 
+        你授权的Google reader账号为：<b>{{ gr_account['userEmail'] }}</b>，换个账户？ <a href="/oauth">重新授权</a>
+        </div>
+
+        <p>
+            <label>标记为已读</label>
+            <select class="bool" name="make_read"> 
+                <option {% if gr.make_read %}selected="selected"{% end %} value="1">标记</option> 
+                <option {% if not gr.make_read %}selected="selected"{% end %} value="0">不标记</option>
+            </select>
+        </p>
+        <p>
+            <label>每个Feed最多加载文章</label>
+            <input type="text" name="max_item" size="4" value="{% if gr and gr.max_item %}{{ gr.max_item }}{%else%}50{% end %}" /> 篇<em class="required">*</em> <em style="color:#666;font-size:80%">(最多200篇)</em>
+        </p>
+        <p>
+            <label>选择投递分类</label><em style="color:#666;font-size:80%">(<strong>请节约资源，仅选择需要的分类</strong>，如果你的Google reader中有Feed而分类信息为空白请稍后刷新再试)</em><br />
+            {% if categories %}
+            {% for catgory in categories %}
+            <label><input type="checkbox" name="categories" {% if catgory.label in gr.categories or catgory.id in gr.categories  %}checked="checked"{% end %} value="{% if catgory.id == 'user/-/state/com.google/starred' %}{{ catgory.id }}{% else %}{{ catgory.label }}{% end %}" />{{ catgory.label }}</label>
+            {% end %}
+            {% end %}
+        </p>
+        <p>* 如需关闭Google reader投递只需不选择任何分类或 <a href="/cancel_account">删除此账户</a></p>
+        {% else %}
+        还没有授权Google reader账户或授权账户认证失效，<a href="/oauth">授权Google reader账户</a>
+        {% end %}
+    </fieldset>
+    
+    <fieldset id="html_fieldset">
+        <legend>网页投递设置</legend>
+        
+        {% if is_admin %}
+        <p>
+         将此链接拖拽至书签栏（IE为收藏夹） <a href="javascript:function dbpj1(){var d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);d.title='(Saving...) '+d.title;z.setAttribute('src',l.protocol+'//reader.dogear.mobi/j?key=042bc0f4d16e4ce71dce8440c77fbbbb&u='+encodeURIComponent(l.href)+'&t='+(new Date().getTime()));b.appendChild(z);}catch(e){alert('Please wait until the page has loaded.');}}dbpj1();void(0)" class="bookmarklet" onclick="alert('将此链接拖拽至书签栏');return false;">Read later!</a> ，然后在访问需要发送的页面点击此链接即可。所有记录页面将在你设定的时间发送到你的Kindle。
+        </p>
+        {% else %}
+        <p><strong style="color:red">即将上线</strong></p>
+        {% end %}
+        
+    </fieldset>
+    <p class="save_btn">
+        <input type="submit" class="btn" value="保存设置" />
+    </p>
+</form>
+<p>
+注意：必须首先激活您的Kindle，我们不支持非激活版的Kindle，同时请到亚马逊账户中心 <a href="https://www.amazon.com/gp/digital/fiona/manage" rel="external">Manage Your Kindle</a> 页面将 <strong>{{ mail_sender }}</strong> 加入 &quot;Your Kindle's approved email list&quot;
+</p>
+
+{% end %}
+
+{% block bottom %}
+{% if not kindle%}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#testlink").click(function(){
+        $('#testlink').hide();
+        $("#testmsg").html("提交中……");
+        $.get('/deliver?test=1',
+            function(data){
+            if(data =='ok')
+            {
+                $("#testmsg").html("成功放入投递队列，注意查收！");
+            }
+            else{
+                $("#testmsg").html("放入队列失败，请检查你的设置！");
+            }
+        });
+        return false;
+    });
+    
+    $("#checkin").click(function(){
+        $(this).val("提交中……").attr('disabled', true);
+        
+        $.post('/checkin',{},function(data){
+            if( data == 'fail')
+            {
+                alert("续期失败,请稍后重试！");
+            }
+            else{
+                $("#expires").html(data);
+                $("#checkin").val("续期成功")
+            }
+        });
+    });
+});
+</script>
+{% end %}
+{% end %}

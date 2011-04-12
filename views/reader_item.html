@@ -1,0 +1,103 @@
+{% extends "reader_base.html" %}
+
+{% block body %}
+<div style='z-index:2; background-color:#000000; padding: 10px 5px 10px 5px; text-align:center'>
+    
+    {% if kindle and kindle != 3 %}
+    {% if item.idx < 20 %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx + 1 }}&c={{ continuation }}'><font class='navrest'>下一条</font>{% if kindle == 3 %}<u>[<b>N</b>]</u>{% end %}<font class='navrest'>&nbsp;&gt;&gt;</font></a>
+    {% elif parent.continuation %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i=1&c={{ parent.continuation }}'><font class='navrest'>下一条</font>{% if kindle == 3 %}<u>[<b>N</b>]</u>{% end %}<font class='navrest'>&nbsp;&gt;&gt;</font></a>
+    {% end %}
+    <br />
+    {% end %}
+    
+    {% if item.idx > 1%}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx - 1 }}&c={{ continuation }}'><font class='navrest'>&lt;&lt;&nbsp;前一条</font>{% if kindle == 3 %}<u>[<b>P</b>]</u>{% end %}</a>
+    {% else %}
+    <font class='navoff'>&lt;&lt;&nbsp;前一条</font>
+    {% end %}<font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% if item.starred %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&s=u'><font class='navrest'>取消星标</font>{% if kindle == 3 %}<u>[<b>S</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% else %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&s=m'><font class='navrest'>加注星标</font>{% if kindle == 3 %}<u>[<b>S</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% end %}
+    {% if item.read %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&m=u'><font class='navrest'>标记为未读</font>{% if kindle == 3 %}<u>[<b>M</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% else %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&m=r'><font class='navrest'>标记为已读</font>{% if kindle == 3 %}<u>[<b>M</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% end %}
+    
+    <a class='nav' href='http://www.instapaper.com/m?u={{ url_escape(item.url) }}'><font class='navrest'>访问原网址</font>{% if kindle == 3 %}<u>[<b>V</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    <a class='nav' href='/reader'><font class='navrest'>Feed列表</font>{% if kindle == 3 %}<u>[<b>F</b>]</u>{% end %}</a><font class='navspacer'>&nbsp;|&nbsp;</font>
+    <a class='nav' href='/reader/view/{{ url_escape(parent.id) }}'><font class='navrest'>条目列表</font>{% if kindle == 3 %}<u>[<b>I</b>]</u>{% end %}</a>
+    {% if not kindle or kindle == 3 %}
+    <font class='navspacer'>&nbsp;|&nbsp;</font>
+    {% if item.idx < 20 %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx + 1 }}&c={{ continuation }}'><font class='navrest'>下一条</font>{% if kindle == 3 %}<u>[<b>N</b>]</u>{% end %}<font class='navrest'>&nbsp;&gt;&gt;</font></a>
+    {% elif parent.continuation %}
+    <a class='nav' href='/reader/item/{{ url_escape(parent.id) }}?i=1&c={{ parent.continuation }}'><font class='navrest'>下一条</font>{% if kindle == 3 %}<u>[<b>N</b>]</u>{% end %}<font class='navrest'>&nbsp;&gt;&gt;</font></a>
+    {% end %}
+    {% end %}
+</div>
+
+<div id='htmlholder' name='htmlholder' class='itemText' style='margin-top:10px'>
+    <h3>{{ item.title }}</h3>
+    {% if parent.isFeed %}
+    <span class="author">来源: {{ parent.title }}&nbsp;&nbsp;|&nbsp;&nbsp;作者: {% if item.author %}{{ item.author }}{% else %}未知{% end %}</span><br />
+    {% end %}
+    
+    {{ item.content }}
+</div>
+{% end %}
+
+{% block head %}
+
+{% if kindle == 3 %}
+function keyHandler(e) {
+var pressedKey;
+if (document.all) { e = window.event; pressedKey = e.keyCode; }
+if (document.layers || e.which) { pressedKey = e.which; }
+if (!pressedKey) { return false; }
+switch(pressedKey) {
+{% if item.idx > 1%}
+case 112: // Previous
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx - 1 }}&c={{ continuation }}';
+break; 
+{% end %}
+case 115: // Star
+{% if item.starred %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&s=u';
+{% else %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&s=m';
+{% end %}
+break; 
+case 109: // Mark
+{% if item.read %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&m=u';
+{% else %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}&m=r';
+{% end %}
+break; 
+case 118: // Visit
+document.location = '{{ item.url }}';
+break; 
+case 102: // Feeds
+document.location = '/reader';
+break; 
+case 105: // Items
+document.location = '/reader/view/{{ url_escape(parent.id) }}';
+break; 
+case 110: // Next
+{% if item.idx <= 20 %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx + 1 }}&c={{ continuation }}';
+{% elif parent.continuation %}
+document.location = '/reader/item/{{ url_escape(parent.id) }}?i=1&c={{ parent.continuation }}';
+{% end %}
+break; 
+}
+}
+document.onkeypress = keyHandler;
+{% end %}
+
+{% end %}

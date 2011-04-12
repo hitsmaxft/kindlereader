@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{{ module_menu.render("oauth") }}
+
+{% if success %}
+Google reader账户授权成功， <a href="/setting">设置</a>
+{% else %}
+
+    {% if fail %}
+    <strong class="error">Google reader账户授权失败！</strong> <a href="/oauth">重试</a>
+    {% else %}
+    点击下面链接完成授权：<br />
+    <p><a href="{{ authorize_url }}">{{ authorize_url }}</a></p>
+    
+    <p><strong>重要说明(必读)：</strong>授权后本站将有权限访问你的Google reader数据，但无法获知您的 Google 帐户密码或其他任何个人信息！！同时本站不会将你的Google reader数据用于投递之外的任何用途! <a href="http://code.google.com/intl/zh-CN/apis/accounts/docs/OAuth.html" rel="external">访问获取更多说明</a> <br /><strong style="color:red;font-weight:normal">无法理解或者不同意本说明请不要点击授权链接！</strong></p>
+    {% end %}
+
+{% end %}
+
+{% end %}

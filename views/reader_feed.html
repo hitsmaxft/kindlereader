@@ -1,0 +1,59 @@
+{% extends "reader_base.html" %}
+
+{% block body %}
+<a href="/reader/"><div style='background-color:#FFF;'><div class='itembar'>{% if kindle == 3 %}<font class='hotkey'><sup>{ <u>a</u> }</sup></font>{% end %}{返回列表}</div></div></a>
+{% if parent and parent.items %}
+<a href="/reader/view/{{ url_escape(parent.id) }}?m=r"><div style='background-color:#DDD;'><div class='itembar'>{% if kindle == 3 %}<font class='hotkey'><sup>{ <u>b</u> }</sup></font>{% end %}{全部标记为已读}</div></div></a>
+{% set index = 2 %}
+{% for item in parent.items %}
+<a href="/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}"><div style='background-color:#{% if index%2 %}DDD{% else %}FF{% end %}'><div class='{% if item.read %}itembarRead{% else %}itembar{% end %}'>{% if kindle == 3 %}<font class='hotkey'><sup>{ <u>{{ hotkeys[index] }}</u> }</sup></font>{% end %}{{ item.title }}</div></div></a>
+{% set index += 1 %}
+{% end %}
+{% else %}
+<div style='background-color:#DDD'><div class='itembarRead'>没有可读条目</div></div>
+{% end %}
+
+{% if parent and parent.continuation %}<a href="/reader/view/{{ url_escape(parent.id) }}?c={{ parent.continuation }}"><div style='background-color:#{% if index%2 %}DDD{% else %}FFF{% end %}'><div class='itembar'>{% if kindle == 3 %}<font class='hotkey'><sup>{ <u>{{ hotkeys[index] }}</u> }</sup></font>{% end %}下一页</div></div></a>{% end %}
+{% end %}
+
+
+{% block head %}
+
+{% if kindle == 3 %}
+
+var lastPressedKey;
+var pressedKey;
+var keyhits = 0;
+function keyHandler(e) {
+lastPressedKey = pressedKey;
+if (document.all) { e = window.event; pressedKey = e.keyCode; }
+if (document.layers || e.which) { pressedKey = e.which; }
+if (!pressedKey) { return false; }
+keyhits++;
+setTimeout("checkKey()",750);
+}
+function checkKey() {
+url = '';
+if (keyhits == 1 && pressedKey == 97) { url = '/reader'; }
+if (keyhits == 1 && pressedKey == 98) {  if (confirm("你确定要标记所有条目为已读吗？")) { url = "/reader/view/{{ url_escape(parent.id) }}?m=r"; } }
+{% set start_key = 99 %}
+{% for item in parent.items %}
+{% if start_key - 97 < 26  %}
+if (keyhits == 1 && pressedKey == {{ start_key }}) { url = '/reader/item/{{ url_escape(parent.id) }}?i={{ item.idx }}&c={{ continuation }}'; }
+{% end %}
+{% set start_key += 1 %}
+{% end %}
+
+{% if parent and parent.continuation %}
+if (keyhits == 1 && pressedKey == {{ start_key }}) { url = '/reader/view/{{ url_escape(parent.id) }}?c={{ parent.continuation }}'; }
+{% end %}
+
+if (url != '') {
+document.location = url;
+}
+}
+document.onkeypress = keyHandler;
+
+{% end %}
+
+{% end %}

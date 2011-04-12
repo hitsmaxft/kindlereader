@@ -1,0 +1,52 @@
+{% extends "reader_base.html" %}
+
+{% block body %}
+<a href="/reader/"><div style='background-color:#FFF;'><div class='menubar'>{% if kindle and kindle == 3 %}<font class='hotkey'><sup>{ <u>a</u> }</sup></font>{% end %}{返回列表}</div></div></a>
+{% if feeds %}
+<a href="/reader/view/{{ url_escape(category.id) }}"><div style='background-color:#DDD;'><div class='menubar'>{% if kindle and kindle == 3 %}<font class='hotkey'><sup>{ <u>b</u> }</sup></font>{% end %}{阅读所有未读条目}</div></div></a>
+{% set index = 2 %}
+{% for feed in feeds %}
+<a href="/reader/view/{{ url_escape(feed.id) }}"><div style='background-color:#{% if index%2 %}DDD{% else %}FFF{% end %};'><div class='{% if feed.unread > 0 %}menubar{% else %}menubarRead{% end %}'>{% if kindle and kindle == 3 %}<font class='hotkey'><sup>{ <u>{{ hotkeys[index] }}</u> }</sup></font>{% end %}{{ feed.title }}{% if feed.unread > 0 %}({{feed.unread}}){% end %}</div></div></a>
+{% set index += 1 %}
+{% end %}
+{% else %}
+没有订阅Feed
+{% end %}
+{% end %}
+
+{% block head %}
+
+{% if kindle and kindle == 3 %}
+
+var lastPressedKey;
+var pressedKey;
+var keyhits = 0;
+function keyHandler(e) {
+lastPressedKey = pressedKey;
+if (document.all) { e = window.event; pressedKey = e.keyCode; }
+if (document.layers || e.which) { pressedKey = e.which; }
+if (!pressedKey) { return false; }
+keyhits++;
+setTimeout("checkKey()",750);
+}
+function checkKey() {
+url = '';
+if (keyhits == 1 && pressedKey == 97) { url = '/reader'; }
+if (keyhits == 1 && pressedKey == 98) { url = "/reader/view/{{ url_escape(category.id) }}"; }
+{% set start_key = 99 %}
+{% for feed in feeds %}
+{% if start_key - 97 < 26  %}
+if (keyhits == 1 && pressedKey == {{ start_key }}) { url = '/reader/view/{{ url_escape(feed.id) }}'; }
+{% end %}
+{% set start_key += 1 %}
+{% end %}
+
+if (url != '') {
+document.location = url;
+}
+}
+document.onkeypress = keyHandler;
+
+{% end %}
+
+{% end %}

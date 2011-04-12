@@ -1,0 +1,17 @@
+indexes:
+
+- kind: DeliverLog
+  properties:
+  - name: email
+  - name: time
+    direction: desc
+    
+- kind: GoogleReaderUser
+  properties:
+  - name: expires
+  - name: send_time
+  
+- kind: UrlQueue
+  properties:
+  - name: kindle_email
+  - name: url_hash

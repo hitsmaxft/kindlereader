@@ -1,0 +1,651 @@
+queue:
+
+- name: testqueue0
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue1
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue2
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue3
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue4
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue5
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue6
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue7
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue8
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue9
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue10
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue11
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue12
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue13
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue14
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+    
+- name: dequeue0
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue1
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue2
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue3
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue4
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue5
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue6
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue7
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue8
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue9
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue10
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue11
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue12
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue13
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue14
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue15
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue16
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue17
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue18
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue19
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue20
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue21
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue22
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue23
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue24
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue25
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue26
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue27
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue28
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue29
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue30
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue31
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue32
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue33
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue34
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue35
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue36
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue37
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue38
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue39
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue40
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue41
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue42
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue43
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue44
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue45
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue46
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue47
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue48
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue49
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
