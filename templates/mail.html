@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Google reader</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+body{
+ margin:5px;
+ font-size: 1.2em;
+}
+</style>
+</head>
+<body>
+  <a name="start"></a>
+  <h1>Google reader</h1>
+  <ul> 
+    <li><a href="#first_item">Go straight to first item</a></li>
+  </ul> 
+  
+  <p>{{ datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ") }}</p>
+  <mbp:pagebreak></mbp:pagebreak>
+
+  <a name="toc"></a>
+  <h2>Feeds:</h2> 
+  <ol> 
+      {% for feed in feeds %}
+      {% if feed.item_count > 0 %}
+      <li>
+        <a href="#feed-{{ feed.idx }}">{{ feed.title }}</a>
+        <br> 
+        {{ feed.item_count }} items
+      </li>
+      {% end %}
+      {% end %}
+  </ol> 
+  <mbp:pagebreak></mbp:pagebreak>
+    
+  {% for feed in feeds %}
+  {% if feed.item_count > 0 %}
+  <a name="feed-{{ feed.idx }}"></a>
+  <div>
+    {% if feed.idx < user['feed_count'] %}
+    <a href="#feed-{{ feed.idx+1 }}">Next Feed</a> |
+    {% end %}
+    
+    {% if feed.idx > 1 %}
+    <a href="#feed-{{ feed.idx-1 }}">Previous Feed</a> |
+    {% end %}
+
+    <a href="#toc">TOC</a> |
+    {{ feed.idx }}/{{ user['feed_count'] }} |
+    {{ feed.item_count }} items
+  </div>
+  <h3><a href="#feed-content-{{ feed.idx }}">{{ feed.title }}</a></h3>
+  <ol>
+    {% for item in feed.items %}
+    <li>
+      <a href="#item-{{ feed.idx }}.{{ item.idx }}">{{ item.title }}</a>
+      {% if item.published %}<br>{{ item.published }}{% end %}
+    </li>
+    {% end %}
+  </ol>
+  {% end %}
+  {% end %}
+  <mbp:pagebreak></mbp:pagebreak>
+
+  <a name="first_item"></a>
+  {% for feed in feeds %}
+  {% if feed.item_count > 0 %}
+  <a name="feed-content-{{ feed.idx }}"></a>
+  <h2>{{ feed.title }}</h2>
+    {% for item in feed.items %}
+    <a name="item-{{ feed.idx }}.{{ item.idx }}"></a>
+    <h3>
+      {% if item.id %}
+      <a href="{{ item.id }}">{{ item.title }}</a>
+      {% else %}
+      {{ item.title }}
+      {% end %}
+    </h3>
+    <div>
+     {% if item.idx < feed.item_count %}
+     <a href="#item-{{ feed.idx }}.{{ item.idx+1 }}">Next</a> |
+     {% elif feed.idx < user['feed_count'] %}
+     <a href="#feed-content-{{ feed.idx+1 }}">Next Feed</a> |
+     {% end %}
+     
+     <a href="#feed-{{ feed.idx }}">{{ feed.title[:5] }}...</a> |
+     <a href="#toc">TOC</a> |
+     {% if item.published %}{{ item.published }} |{% end %}
+     {{ item.idx }}/{{ feed.item_count }}
+    </div>
+    <div>{{ item.content }}</div>
+    {% end %}
+    <mbp:pagebreak></mbp:pagebreak>
+  {% end %}
+  {% end %}
+</body>
+</html>
