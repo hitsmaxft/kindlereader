@@ -7,4 +7,4 @@
 
 ## 许可
 
-Kindlereader is licensed under very liberal BSD license.
+Kindlereader is Licensed under the MIT license: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
