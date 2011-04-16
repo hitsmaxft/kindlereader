@@ -43,6 +43,16 @@ def deflate_and_base64_encode( string_val ):
     compressed_string = zlibbed_str[2:-4]
     return base64.b64encode( compressed_string )
 
+def new_queue_name( base_name="testqueue" ):
+    """docstring for get_queue_name"""
+    
+    if billing_enabled:
+        max_id = 49
+    else:
+        max_id = 4
+
+    return "%s%s" % (base_name, random.randint(0, max_id))
+
 class GoogleReaderUser(db.Model):
     kindle_email = db.StringProperty()
     categories = db.StringListProperty()
@@ -509,7 +519,7 @@ class DeliverHandler(BaseHandler):
                 self.response.out.write("fail")
             else:
                 key = self.log(user.email(), gr_user.kindle_email, 0, 0, 0, status="queueing")
-                queue_name = "testqueue%s" % random.randint(0, 14)
+                queue_name = new_queue_name("testqueue") #"testqueue%s" % random.randint(0, 14)
                 taskqueue.add(url='/worker',
                               queue_name=queue_name,
                               method='GET',
@@ -536,7 +546,7 @@ class DeliverHandler(BaseHandler):
                     or gr_user.access_secret \
                     and gr_user.categories:
                     
-                    queue_name = "dequeue%s" % random.randint(0, 49)
+                    queue_name = new_queue_name("dequeue") #"dequeue%s" % random.randint(0, 49)
                     taskqueue.add(url='/worker',
                                   queue_name = queue_name,
                                   method = 'GET',
@@ -619,7 +629,7 @@ class Post_V1Handler(BaseHandler):
             q.added = datetime.datetime.utcnow()
             q.put()
         
-        # queue_name = "dequeue%s" % random.randint(0, 49)
+        # queue_name = new_queue_name("dequeue")
         # 
         # taskqueue.add(url='/push_worker',
         #               queue_name = queue_name,
@@ -1154,7 +1164,7 @@ class ReaderHandler(BaseHandler):
     def edit_item_tag(self, id, action, tag):
         """docstring for markRead"""
         
-        queue_name = "deliverqueue%s" % random.randint(0, 8)
+        queue_name = new_queue_name("dequeue")
         taskqueue.add(url='/edit_item_tag',
                       queue_name = queue_name,
                       method = 'POST',

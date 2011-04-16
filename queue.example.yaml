@@ -1,0 +1,101 @@
+queue:
+
+- name: testqueue0
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue1
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue2
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue3
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+ 
+- name: testqueue4
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+    
+- name: dequeue0
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue1
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue2
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue3
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
+
+- name: dequeue4
+  rate: 10/s
+  bucket_size: 10
+  retry_parameters:
+    task_retry_limit: 2
+    task_age_limit: 5m
+    min_backoff_seconds: 60
+    max_backoff_seconds: 600
+    max_doublings: 4
