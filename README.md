@@ -1,6 +1,6 @@
 # Kindlereader (gae)
 
-一个定时将Google reader发送到kindle的工具，运行于 Google app engine, demo [http://reader.dogear.mobi](http://reader.dogear.mobi)
+一个定时将Google reader发送至kindle的工具，运行于 Google app engine, demo [http://reader.dogear.mobi](http://reader.dogear.mobi)
 
 ## 安装
 
@@ -11,4 +11,4 @@
 
 ## 许可
 
-Kindlereader is licensed under very liberal BSD license.
+Kindlereader is Licensed under the MIT license: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
