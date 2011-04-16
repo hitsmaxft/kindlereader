@@ -553,7 +553,7 @@ class BookmarkletHandler(BaseHandler):
 
     def get(self):
         """docstring for get"""
-        user_token = self.request.get("key")
+        user_token = self.request.get("k")
         self.render('bookmarklet.js', key=user_token)
             
 class Post_V1Handler(BaseHandler):
@@ -916,7 +916,7 @@ class WorkerHandler(BaseHandler):
                 else:
                     logging.debug("no update.")
                 
-                if feed_idx > 50 or updated_items > 2000:
+                if feed_idx > 30 or updated_items > 1000:
                     break
                 
             except Exception, e:
