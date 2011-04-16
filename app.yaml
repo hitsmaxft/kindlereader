@@ -1,4 +1,4 @@
-application: kindlereader
+application: kindlefeeder
 version: 1
 runtime: python
 api_version: 1
@@ -19,10 +19,13 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: /(deliver)?
+- url: /
+  script: main.py
+
+- url: /(deliver|js|post_v1)
   script: main.py
   
-- url: /(worker|push_worker|upgrade|remove_logs)/?
+- url: /(worker|push_worker|remove_logs)/?
   script: main.py
   login: admin
   

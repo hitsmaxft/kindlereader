@@ -643,7 +643,7 @@ class Post_V1Handler(BaseHandler):
         </body>
         </html>""")
 
-class PushUrlWorkerHandler(BaseHandler):
+class PostWorkerHandler(BaseHandler):
     
     def post(self):
         
@@ -1356,9 +1356,9 @@ def main():
                         ('/deliver', DeliverHandler),
                         ('/feedback', FeedbackHandler),
                         ('/worker', WorkerHandler),
+                        ('/post_worker', PostWorkerHandler),
                         ('/j', BookmarkletHandler),
                         ('/post_v1', Post_V1Handler),
-                        ('/push_worker', PushUrlWorkerHandler),
                         ('/reader/?', ReaderIndexHandler),
                         ('/reader/label/(.*)', ReaderLabelHandler),
                         ('/reader/view/(.*)', ReaderViewHandler),
