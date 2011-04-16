@@ -1,6 +1,6 @@
 # Kindlereader (gae)
 
-一个定时将Google reader发送到kindle的工具，运行于 Google app engine, demo http://reader.dogear.mobi
+一个定时将Google reader发送到kindle的工具，运行于 Google app engine, demo [http://reader.dogear.mobi](http://reader.dogear.mobi)
 
 ## 安装
 
