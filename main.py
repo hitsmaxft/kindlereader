@@ -360,6 +360,7 @@ class SettingHandler(BaseHandler):
                 user = user.nickname(),
                 gr = gr,
                 mail_sender = mail_sender,
+                base_domain = base_domain,
                 gr_account = gr_account,
                 categories = categories,
                 success = success
@@ -564,7 +565,7 @@ class BookmarkletHandler(BaseHandler):
     def get(self):
         """docstring for get"""
         user_token = self.request.get("k")
-        self.render('bookmarklet.js', key=user_token)
+        self.render('bookmarklet.js', key=user_token, base_domain = base_domain)
             
 class Post_V1Handler(BaseHandler):
     """docstring for Post_V1Handler"""
