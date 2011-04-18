@@ -8,7 +8,7 @@ base_domain = "kindlerfeeder.appspot.com"
 # more info http://code.google.com/intl/zh-CN/appengine/docs/python/mail/sendingmail.html
 mail_sender = ""
 
-# Google oAuth info
+# Google OAuth info
 # Get it from https://www.google.com/accounts/ManageDomains
 consumer_key = ""
 consumer_secret = ""

@@ -784,7 +784,7 @@ class WorkerHandler(BaseHandler):
                 
                 idx += 1
         
-        if idx > 1:
+        if idx > 0:
             self.updated_pages = idx
             return self.make_html('pages.html', pages = pages)
         else:
