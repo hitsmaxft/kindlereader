@@ -25,7 +25,7 @@ handlers:
 - url: /(deliver|js|post_v1)
   script: main.py
   
-- url: /(worker|push_worker|remove_logs)/?
+- url: /(worker|post_worker|remove_logs)/?
   script: main.py
   login: admin
   

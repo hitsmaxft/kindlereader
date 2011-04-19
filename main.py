@@ -4,7 +4,7 @@
 import os
 #import time
 import datetime
-#import logging
+import logging
 import random
 import hashlib
 import re
@@ -520,11 +520,10 @@ class DeliverHandler(BaseHandler):
                 self.response.out.write("fail")
             else:
                 key = self.log(user.email(), gr_user.kindle_email, 0, 0, 0, status="queueing")
-                queue_name = new_queue_name("testqueue") #"testqueue%s" % random.randint(0, 14)
-                taskqueue.add(url='/worker',
-                              queue_name=queue_name,
-                              method='GET',
-                              params={'email': gr_user.key().name(), 'log_key':key })
+                taskqueue.add(url = '/worker',
+                              queue_name = new_queue_name("testqueue"),
+                              method = 'GET',
+                              params = {'email': gr_user.key().name(), 'log_key':key })
                               
                 self.response.out.write('ok')
                 
@@ -547,12 +546,11 @@ class DeliverHandler(BaseHandler):
                     or gr_user.access_secret \
                     and gr_user.categories:
                     
-                    queue_name = new_queue_name("dequeue") #"dequeue%s" % random.randint(0, 49)
                     taskqueue.add(url='/worker',
-                                  queue_name = queue_name,
+                                  queue_name = new_queue_name("dequeue"),
                                   method = 'GET',
                                   eta = send_time,
-                                  params={'email': gr_user.key().name()})
+                                  params = {'email': gr_user.key().name()})
                                   
                     task_num += 1
             
@@ -585,18 +583,47 @@ class Post_V1Handler(BaseHandler):
         content    = self.request.get("b")
         
         if not user_token:
-            u = users.get_current_user()
+            user = users.get_current_user()
             
-            if u:
-                gr_user = GoogleReaderUser.get_by_key_name(u.email())
-            else:
-                gr_user = None
+            if user:
+                gr_user = GoogleReaderUser.get_by_key_name(user.email())
                 
-            if gr_user and gr_user.user_token: user_token = gr_user.user_token
+                if gr_user.user_token:
+                    user_token = gr_user.user_token
             
-        if not user_token or not url:
-            return
-            
+        if user_token and url and title and content:
+            taskqueue.add(url='/post_worker',
+                          queue_name = new_queue_name("testqueue"),
+                          method = 'POST',
+                          params = {
+                            'u': url,
+                            'k': user_token,
+                            'a': action,
+                            't': title,
+                            'b': content
+                        })
+            msg = "Saved!"
+        else:
+            msg = "Failed!"
+    
+        self.response.out.write("""<html>
+        <body style="color: #222;background-color: #fff; text-align: center; margin: 0px; font-family: Georgia, Times, serif; font-size: 26px;">
+        <div style="text-align: center; width: 80%; padding-bottom: 1px; margin: 0 auto 15px auto; font-size: 14px; border-bottom: 1px solid #ccc; color: #333;">Dogear</div>
+        """ + msg + """
+        </body>
+        </html>""")
+
+class PostWorkerHandler(BaseHandler):
+    
+    def post(self):
+        """docstring for post"""
+        url        = self.request.get("u")
+        user_token = self.request.get("k")
+        action     = self.request.get("a") # 1 和google reader一起投递, 2 马上投递
+        
+        title      = self.request.get("t")
+        content    = self.request.get("b")
+        
         grs = GoogleReaderUser.gql("WHERE user_token =:user_token", user_token = user_token).fetch(limit=1)
         
         if grs:
@@ -604,25 +631,21 @@ class Post_V1Handler(BaseHandler):
         else:
             user = None
             
-        if user and user.kindle_email:
-            self.push(url, title, content, user.kindle_email, action)
-        else:
-            self.redirect("/setting")
-    
-    def push(self, url, title, content, kindle_email, action = 2):
-        """docstring for push"""
+        if not user or not user.kindle_email:
+            logging.error("user not found!")
+            return
         
         content = decode_base64_and_inflate( content[4:] )
         
         if action.isdigit() and int(action) is 2: # push now
             mail.send_mail(sender = mail_sender,
-                      to = kindle_email,
+                      to = user.kindle_email,
                       subject = "Convert",
                       body = "deliver from http://reader.dogear.mobi",
                       attachments=[("%s.html" % title, content)])
         else:
             q = UrlQueue()
-            q.kindle_email = kindle_email
+            q.kindle_email = user.kindle_email
             q.url = url
             q.title = title
             q.content = unicode(content, 'utf-8')
@@ -630,23 +653,9 @@ class Post_V1Handler(BaseHandler):
             q.added = datetime.datetime.utcnow()
             q.put()
         
-        # queue_name = new_queue_name("dequeue")
-        # 
-        # taskqueue.add(url='/push_worker',
-        #               queue_name = queue_name,
-        #               method = 'POST',
-        #               params={'u': url, 't': kindle_email, 'a': action})
-        
-        self.response.out.write("""<html>
-        <body style="color: #222; background-color: #fff; text-align: center; margin: 0px; font-family: Georgia, Times, serif; font-size: 26px;">
-        <div style="text-align: center; width: 80%; padding-bottom: 1px; margin: 0 auto 15px auto; font-size: 14px; border-bottom: 1px solid #ccc; color: #333;">Dogear</div>
-        Saved!
-        </body>
-        </html>""")
-
-class PostWorkerHandler(BaseHandler):
+        self.response.out.write("ok")
     
-    def post(self):
+    def _post(self):
         
         url = self.request.get("u")
         kindle_email = self.request.get("t")
@@ -751,9 +760,9 @@ class WorkerHandler(BaseHandler):
         if not gr or not gr.kindle_email:
             return
             
-        gr_data = self.parser_gr(gr, email, log_key)
+        gr_data = self.parse_gr(gr, email, log_key)
         
-        html_data = self.parser_page(gr)
+        html_data = self.parse_page(gr)
         
         self.sendmail(gr.kindle_email, gr_data, html_data)
         
@@ -763,7 +772,7 @@ class WorkerHandler(BaseHandler):
         gr_data, html_data = None, None
         del gr_data, html_data
         
-    def parser_page(self, gr):
+    def parse_page(self, gr):
         """docstring for fname"""
 
         urls = UrlQueue.gql("WHERE status = 0 and kindle_email =:email limit 100", email=gr.kindle_email)
@@ -791,7 +800,7 @@ class WorkerHandler(BaseHandler):
             logging.debug("no page for %s" % gr.kindle_email)
             return None
     
-    def parser_gr(self, gr, email, log_key):
+    def parse_gr(self, gr, email, log_key):
     
         if not gr \
             or not gr.kindle_email \
@@ -1165,9 +1174,8 @@ class ReaderHandler(BaseHandler):
     def edit_item_tag(self, id, action, tag):
         """docstring for markRead"""
         
-        queue_name = new_queue_name("dequeue")
         taskqueue.add(url='/edit_item_tag',
-                      queue_name = queue_name,
+                      queue_name = new_queue_name("dequeue"),
                       method = 'POST',
                       params={'e': self.user.email(),
                               'i': id,
