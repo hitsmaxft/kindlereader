@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
 main.py
@@ -115,7 +115,7 @@ TEMPLATES['content.html'] = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
               {{ feed.item_count }} items
             </li>
             {% end %}
-            
+
             {% end %}
         </ol> 
           
@@ -553,11 +553,11 @@ class KindleReader(object):
             fp.write(content)
             fp.close()
 
-        mobi_file = "%s'GoogleReader(%s).mobi" % (user['userName'],
-                time.strftime('%m-%dT%Hh%Mm'))
+        mobi_file = "GoogleReader(%s).mobi"% \
+                time.strftime('%m-%dT%Hh%Mm')
         opf_file = os.path.join(data_dir, "content.opf")
 
-        subprocess.call('%s -unicode %s -o "%s" > log.txt' %
+        subprocess.call('%s  %s -o "%s" > log.txt' %
                 (kindlegen, opf_file, mobi_file), shell=True)
 
         mobi_file = os.path.join(data_dir, mobi_file)
@@ -611,9 +611,10 @@ class KindleReader(object):
         """download image"""
 
         print "download: %s" % url,
-        
+
         url = escape.utf8(url)
         image_guid = hashlib.sha1(url).hexdigest()
+        convert_image = self.get_config('reader', 'convert_image')
 
         x = url.split('.')
         ext = 'jpg'
@@ -637,12 +638,12 @@ class KindleReader(object):
 
         img_dir  = os.path.join(self.work_dir, 'data', 'images', hash_dir)
         fullname = os.path.join(img_dir, filename)
-        
+
         localimage = 'images/%s/%s' % (hash_dir, filename)
         if os.path.isfile(fullname) is False:
             if not os.path.exists(img_dir):
                 os.makedirs( img_dir )
-            try:                
+            try:
                 req = urllib2.Request(url)
                 req.add_header('User-Agent', self.user_agent)
                 req.add_header('Accept-Language', 'zh-cn,zh;q=0.7,nd;q=0.3')
@@ -657,6 +658,10 @@ class KindleReader(object):
 
                 response.close()
                 localFile.close()
+                if convert_image :
+                    os.system('convert -colorspace gray  \'%s[0]\' \
+                            %s'% (fullname, fullname)
+                            )
                 print "done."
             except Exception, e:
                 print 'fail: %s' % e
@@ -665,7 +670,7 @@ class KindleReader(object):
                 localFile, response, req = None, None, None
         else:
             print "exists."
-        
+
         return localimage
 
     def main(self):
@@ -674,7 +679,7 @@ class KindleReader(object):
 
         if not password and self.password:
             password = self.password
-        
+
         if not username or not password:
             raise Exception("google reader's username or password is empty!")
 
@@ -685,6 +690,7 @@ class KindleReader(object):
         categoires = reader.getCategories()
         
         skip_categories = self.get_config('reader', 'skip_categories')
+        select_categories = self.get_config('reader', 'select_categories')
         
         skips = []
         if skip_categories:
@@ -692,12 +698,23 @@ class KindleReader(object):
 
             for c in skip_categories:
                 if c: skips.append(c.encode('utf-8').strip())
-            
+
             skip_categories = None
 
+        selects = []
+        if select_categories:
+            select_categories = select_categories.split(',')
+            
+            for c in select_categories:
+                if c: selects.append(c.encode('utf-8').strip())
+            
+            select_categories = None
+            
         feeds = {}
+        capture_feeds = selects
         for category in categoires:
-            if category.label not in skips:
+            if category.label.encode("utf-8") in capture_feeds:
+                print 'select category: %s' % category.label.encode("utf-8")
                 fd = category.getFeeds()
                 for f in fd:
                     if f.id not in feeds:
@@ -706,10 +723,10 @@ class KindleReader(object):
             else:
                 if iswindows:
                     category.label = category.label.encode("gbk")
-                print 'skip category: %s' % category.label
+                print 'skip category: %s' % category.label.encode("utf-8")
         
         max_items_number = self.get_config('reader', 'max_items_number')
-        make_read = self.get_config('reader', 'make_read')
+        mark_read = self.get_config('reader', 'mark_read')
         exclude_read = self.get_config('reader', 'exclude_read')
         max_image_per_article = self.get_config('reader', 'max_image_per_article')
 
@@ -733,9 +750,9 @@ class KindleReader(object):
         
         feed_num, current_feed = len(feeds), 0
         updated_feeds = []
+
         for feed_id in feeds:
             feed = feeds[feed_id]
-
             current_feed = current_feed + 1
             print "\nget [%s/%s]: %s" % (current_feed, feed_num, feed.id)
             
@@ -763,12 +780,14 @@ class KindleReader(object):
                 feed.item_count = len(feed.items)
                 updated_items += feed.item_count
                 
-                if mark_read:
+                if mark_read.isdigit() and int(mark_read) is 1:
                     if feed.item_count >= max_items_number:
                         for item in feed.items:
                             item.markRead()
+                        print "mark %d items as read"% feed.item_count
                     elif feed.item_count > 0:
                         reader.markFeedAsRead(feed)
+                        print "mark all items as read"
             
                 if feed.item_count > 0:
                     feed_idx += 1
