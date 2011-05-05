@@ -2,3 +2,4 @@
 dist
 config.ini
 data
+/log.txt

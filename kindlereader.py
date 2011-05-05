@@ -691,8 +691,12 @@ class KindleReader(object):
         
         skip_categories = self.get_config('reader', 'skip_categories')
         select_categories = self.get_config('reader', 'select_categories')
+        started_items = self.get_config('reader', 'started_items')
         
+        feeds = {}
         skips = []
+        selects = []
+
         if skip_categories:
             skip_categories = skip_categories.split(',')
 
@@ -701,7 +705,6 @@ class KindleReader(object):
 
             skip_categories = None
 
-        selects = []
         if select_categories:
             select_categories = select_categories.split(',')
             
@@ -710,7 +713,11 @@ class KindleReader(object):
             
             select_categories = None
             
-        feeds = {}
+        if started_items.isdigit() and int(started_items) is 1:
+            sf = SpecialFeed(reader, "starred")
+            sf.title = u"加星标的条目"
+            feeds[sf.id] = sf
+
         capture_feeds = selects
         for category in categoires:
             if category.label.encode("utf-8") in capture_feeds:
@@ -726,7 +733,10 @@ class KindleReader(object):
                 print 'skip category: %s' % category.label.encode("utf-8")
         
         max_items_number = self.get_config('reader', 'max_items_number')
-        mark_read = self.get_config('reader', 'mark_read')
+        try:
+            mark_read = string.atoi(self.get_config('reader', 'mark_read'))
+        except :
+            mark_read = 0
         exclude_read = self.get_config('reader', 'exclude_read')
         max_image_per_article = self.get_config('reader', 'max_image_per_article')
 
@@ -780,7 +790,7 @@ class KindleReader(object):
                 feed.item_count = len(feed.items)
                 updated_items += feed.item_count
                 
-                if mark_read.isdigit() and int(mark_read) is 1:
+                if mark_read == 1:
                     if feed.item_count >= max_items_number:
                         for item in feed.items:
                             item.markRead()
